@@ -1,0 +1,4 @@
+nth (cons X XS) 0 = X .
+nth (cons X XS) (s N) = nth XS N .
+
+main = nth (nth [[1,2,3], [4,5,6]] 1) 2 .
