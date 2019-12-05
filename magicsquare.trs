@@ -1,0 +1,51 @@
+not true  = false .
+not false = true .
+
+eq 0 0         = true .
+eq (s X) 0     = false .
+eq 0 (s Y)     = false .
+eq (s X) (s Y) = eq X Y .
+
+and true true = true .
+and false Y   = false .
+and X false   = false .
+
+append nil YS         = YS .
+append (cons X XS) YS = cons X (append XS YS) .
+
+add 0 Y     = Y .
+add (s X) Y = s (add X Y) .
+
+map_prefixes X nil = nil .
+map_prefixes X (cons Y YS) = append [cons X Y] (map_prefixes X YS) .
+
+prefixes nil = [[]] .
+prefixes (cons X XS) = cons nil (map_prefixes X (prefixes XS)) .
+
+suffixes nil = [[]] .
+suffixes (cons X XS) = cons (cons X XS) (suffixes XS) .
+
+zip_interleave X nil nil = nil .
+zip_interleave X (cons YS YSS) (cons ZS ZSS) = cons (append (append YS [X]) ZS) (zip_interleave X YSS ZSS) .
+
+interleave X XS = zip_interleave X (prefixes XS) (suffixes XS) .
+
+map_permutations X nil = nil .
+map_permutations X (cons YS YSS) = append (interleave X YS) (map_permutations X YSS) .
+
+permutations nil       = [[]] .
+permutations (cons X XS) = map_permutations X (permutations XS) .
+
+values I nil = 0 .
+values 0 (cons X XS) = X .
+values (s I) (cons X XS) = values I XS . 
+
+ok XS = (and (and (and (and (and (and (and (eq (add (add (values 0 XS) (values 1 XS)) (values 2 XS)) 15) (eq (add (add (values 3 XS) (values 4 XS)) (values 5 XS)) 15)) (eq (add (add (values 6 XS) (values 7 XS)) (values 8 XS)) 15)) (eq (add (add (values 0 XS) (values 3 XS)) (values 6 XS)) 15)) (eq (add (add (values 1 XS) (values 4 XS)) (values 7 XS)) 15))(eq (add (add (values 2 XS) (values 5 XS)) (values 8 XS)) 15)) (eq (add (add (values 0 XS) (values 4 XS)) (values 8 XS)) 15)) (eq (add (add (values 2 XS) (values 4 XS)) (values 6 XS)) 15)) .
+ 
+magic_square nil = nil .
+magic_square (cons X XS) = if_magic_square X XS (ok X) .
+if_magic_square C (cons X XS) true = cons C (magic_square XS) .
+if_magic_square C (cons X XS) false = magic_square XS .
+
+main = magic_square (permutations [1,2,3,4,5,6,7,8,9]) .
+
