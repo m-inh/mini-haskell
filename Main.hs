@@ -1,6 +1,6 @@
--- Name: NGUYEN Minh Tien
--- ID  : 1810445
--- Acknowledgement: VU Chi Kien
+-- name: NGUYEN Minh Tien
+-- id  : 1810445
+-- acknowledgements: VU Chi Kien
 
 import Debug.Trace
 import TRS
@@ -138,7 +138,7 @@ main = do
     Left e    -> print e
     Right trs -> do
       putStrLn (showTRS trs)
-      putStrLn ("----->" ++ show rs)
+      putStrLn (show rs)
       -- putStrLn ("----->" ++ show (toTerm rs))
       -- putStrLn (show (nf3 trs (Hole, MCon "main")))
       where 
